@@ -18,7 +18,7 @@ def parser(options=None):
         description='Build the uvqs DB')
     parser.add_argument("-v", "--version", help="DB version to generate")
     parser.add_argument("-t", "--test", default=False, action='store_true', help="Test?")
-    parser.add_argument("--clobber", default=False, action='store_true', help="Clobber existing file?")
+    parser.add_argument("-c", "--clobber", default=False, action='store_true', help="Clobber existing file?")
 
     if options is None:
         args = parser.parse_args()
@@ -45,7 +45,7 @@ def main(args=None):
 
     # Run
     if pargs.version is None:
-        print("Building v02 of the uvqs DB")
+        print("Building v01 of the uvqs DB")
         build_db.ver01(test=pargs.test, clobber=pargs.clobber)
     elif pargs.version == 'v01':
         print("Building v01 of the uvqs DB")

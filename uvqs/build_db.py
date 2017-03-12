@@ -63,8 +63,8 @@ def ver01(test=False, skip_copy=False, publisher='J.X. Prochaska', clobber=False
         # Survey flag
         flag_g = sdbbu.add_to_group_dict(gname, group_dict, skip_for_debug=True)
         # IDs
-        maindb = sdbbu.add_ids(maindb, meta, flag_g, tkeys, idkey,
-                               first=(flag_g==1), close_pairs=(gname in pair_groups))
+        maindb = sdbbu.add_ids(maindb, meta, flag_g, tkeys, idkey, mtch_toler=5*u.arcsec,
+                               pair_sep=4.9*u.arcsec, first=(flag_g==1))#, close_pairs=(gname in pair_groups))
         # Spectra
         if not meta_only:
             new_groups[gname].hdf5_adddata(hdf, gname, meta)
@@ -73,6 +73,7 @@ def ver01(test=False, skip_copy=False, publisher='J.X. Prochaska', clobber=False
     # Check for duplicates -- There is 1 pair in SDSS (i.e. 2 duplicates)
     if not sdbbu.chk_for_duplicates(maindb, dup_lim=2):
         raise ValueError("Failed duplicates")
+    pdb.set_trace()
 
     # Check stacking
     if not sdbbu.chk_vstack(hdf):
