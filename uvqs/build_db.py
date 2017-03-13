@@ -95,7 +95,7 @@ def ver01(test=False, skip_copy=False, publisher='J.X. Prochaska', clobber=False
 
 def chk_clobber(outfil, clobber=False):
     """ Simple clobber check
-    
+
     outfil : str
     clobber : bool, optional
     """
