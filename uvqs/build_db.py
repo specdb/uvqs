@@ -22,6 +22,10 @@ from specdb.build import utils as sdbbu
 import uvqs
 from uvqs import fuv
 
+try:
+    bstr = bytes
+except NameError:  # For Python 2
+    bstr = str
 
 def ver01(test=False, skip_copy=False, publisher='J.X. Prochaska', clobber=False):
     """ Build version 2.X
@@ -54,7 +58,7 @@ def ver01(test=False, skip_copy=False, publisher='J.X. Prochaska', clobber=False
 
     group_dict = {}
     new_groups = get_build_groups(version)
-    meta_only = True
+    meta_only = False
     # Loop over the new groups
     for gname in new_groups:
         print("Working on group: {:s}".format(gname))
@@ -73,7 +77,6 @@ def ver01(test=False, skip_copy=False, publisher='J.X. Prochaska', clobber=False
     # Check for duplicates -- There is 1 pair in SDSS (i.e. 2 duplicates)
     if not sdbbu.chk_for_duplicates(maindb, dup_lim=2):
         raise ValueError("Failed duplicates")
-    pdb.set_trace()
 
     # Check stacking
     if not sdbbu.chk_vstack(hdf):
@@ -125,17 +128,6 @@ def get_build_groups(version):
     elif version == 'v02':
         pdb.set_trace()
         groups = OrderedDict()
-        groups['HST_z2'] = hst_z2       # O'Meara et al. 2011
-        groups['XQ-100'] = xq100        # Lopez et al. 2016
-        groups['HDLA100'] = hdla100     # Neeleman et al. 2013
-        groups['2QZ'] = twodf           # Croom et al.
-        groups['ESI_DLA'] = esidla      # Rafelski et al. 2012, 2014
-        groups['COS-Halos'] = cos_halos # Tumlinson et al. 2013
-        groups['COS-Dwarfs'] = cos_dwarfs # Bordoloi et al. 2014
-        groups['HSTQSO'] = hst_qso      # Ribaudo et al. 2011; Neeleman et al. 2016
-        groups['MUSoDLA'] = musodla     # Jorgensen et al. 2013
-        groups['UVES_Dall'] = uves_dall # Dall'Aglio et al. 2008
-        groups['UVpSM4'] = hst_c        # Cooksey et al. 2010, 2011
     else:
         raise IOError("Not ready for this version")
     # Return
